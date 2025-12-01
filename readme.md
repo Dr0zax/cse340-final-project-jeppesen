@@ -14,7 +14,7 @@ The backend follows RESTful principles and uses a relational database to store a
 Accessible to all visitors:
 
 - **Home Page** showing featured vehicles  
-- **Browse by Category:** Trucks, Vans, Cars, SUVs  
+- **Catalog:** Trucks, Vans, Cars, SUVs  
 - **Vehicle Detail Pages:** Image gallery, full specs, pricing  
 - **Contact Form:** User inquiries saved to the database  
 

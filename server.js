@@ -2,6 +2,8 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { setupDatabase, testConnection } from './src/models/setup.js';
+
 import routes from './src/controllers/routes.js';
 import globalMiddleware from './src/middleware/global.js';
 
@@ -65,6 +67,14 @@ if (NODE_ENV.includes('dev')) {
     }
 }
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port http://127.0.0.1:${PORT}`);
+app.listen(PORT, async () => {
+    try {
+        await setupDatabase();
+        await testConnection();
+        console.log(`Server is running on port http://127.0.0.1:${PORT}`);
+
+    } catch (err) {
+        console.error("Failed to start server:", err.message);
+        process.exit(1);
+    }
 });
