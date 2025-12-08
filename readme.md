@@ -83,7 +83,7 @@ Your database must include the following tables:
 ### **Vehicle Images**  
 - `id`  
 - `vehicle_id` (FK → Vehicles)  
-- `image_url`  
+- `image_path`  
 
 ### **Reviews**  
 - `id`  
@@ -98,7 +98,7 @@ Your database must include the following tables:
 - `user_id` (FK → Users)  
 - `vehicle_id` (optional FK → Vehicles owned by user)  
 - `service_type`  
-- `status` (`Submitted`, `In Progress`, `Completed`)  
+- `status` (`Submitted`, `Pending`, `Completed`)  
 - `notes`  
 - Timestamps  
 
@@ -161,10 +161,9 @@ Role-based access control governs access to admin and employee routes.
 ## Technologies Used  
 
 - **Backend:** Node.js, Express  
-- **Database:** SQLite / PostgreSQL / MySQL  
-- **Authentication:** JWT or session-based auth  
-- **ORM / Query Builder:** Prisma / Sequelize / Knex / raw SQL  
-- **Frontend:** EJS, React, or HTML templates (depending on implementation)  
+- **Database:** PostgreSQL  
+- **Authentication:** session-based auth   
+- **Frontend:** EJS
 
 ---
 
