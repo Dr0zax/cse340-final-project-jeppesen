@@ -1,5 +1,5 @@
 const homePage = (req, res) => {
-    const title = "Home Page";
+    const title = "Car Dealership Home Page";
     res.render('home', { title });
 }
 
