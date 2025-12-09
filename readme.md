@@ -123,35 +123,35 @@ Role-based access control governs access to admin and employee routes.
 
 ## API Structure (Example)
 
-- `/api/auth`
+- `/auth`
 - `POST /register`
 - `POST /login`
 
-- `/api/vehicles`
+- `/vehicles`
 - `GET /`
 - `GET /:id`
 - `POST / (owner only)`
 - `PUT /:id (employee/owner)`
 - `DELETE /:id (owner)`
 
-- `/api/categories`
+- `/categories`
 - `GET /`
 - `POST / (owner)`
 - `PUT /:id (owner)`
 - `DELETE /:id (owner)`
 
-- `/api/reviews`
+- `/reviews`
 - `POST / (user)`
 - `PUT /:id (owner of review)`
 - `DELETE /:id (owner of review or employee)`
 
-- `/api/service-requests`
+- `/service-requests`
 - `POST / (user)`
 - `GET /mine (user)`
 - `GET / (employee/owner)`
 - `PUT /:id/status (employee/owner)`
 
-- `/api/contact`
+- `/contact`
 - `POST /`
 - `GET / (employee/owner)`
 

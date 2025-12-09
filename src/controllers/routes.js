@@ -1,12 +1,12 @@
 import { Router } from "express";
 import { homePage } from "./index.js";
-// import { vehicleCatalogPage } from './catalog/catalog.js';
+import { vehicleCatalogPage } from './catalog/catalog.js';
 
 const router = Router();
 
 router.get('/', homePage);
 
-// router.get('/catalog', vehicleCatalogPage);
+router.get('/catalog', vehicleCatalogPage);
 // router.get('/catalog/:vehicleId', vehicleDetailPage);
 
 // router.get('/contact', showContactForm);
