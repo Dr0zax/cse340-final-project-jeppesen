@@ -36,6 +36,45 @@
     }
 }
 
+.vehicles {
+    max-width: 800px;
+    margin: 0 auto;
+
+    .vehicles-header {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+
+        h2 {
+            font-size: 1.75rem;
+            margin: 0;
+        }
+
+        .sort-options {
+            display: flex;
+            gap: 0.5rem;
+            text-align: center;
+            align-items: center;
+
+            a {
+                 text-decoration: none;
+                background-color: #ddd;
+                padding: 10px 15px;
+                border-bottom: 5px solid #A6B1E1;
+                color: #333;
+
+                &.active {
+                    background-color: #A6B1E1;
+                }
+            }
+        }
+    }
+
+}
+
+
 .vehicle-detail {
     display: flex;
     flex-direction: column;

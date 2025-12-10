@@ -1,20 +1,57 @@
 <%- include('../partials/header') %>
-    <h1><%= title %></h1>
+<h1><%= title %></h1>
 
-    <div class="vehicle-list">
-        <% vehicles.forEach(vehicle => { %>
-            <div class="vehicle-card">
-                <div>
-                    <h2><a href="/catalog/<%= vehicle.slug %>"><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></a></h2>
-                    <p><%= vehicle.description %></p>
-                </div>
-                <img 
-                src="/images/vehicles/<%= vehicle.slug %>.jpg" 
-                alt="Photo of <%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %>"
-                class="vehicle-image"
-                >
-            </div>
-        <%}); %>
+<div class="vehicles">
+  <div class="vehicles-header">
+    <h2>Available Vehicles</h2>
+    <p>Explore our collection of <%= vehicles.length %> vehicles.</p>
+    <div class="sort-options">
+      <label for="sort-by">Sort by:</label>
+      <a href="/catalog" class="<%= currentSort === 'year' ? 'active' : '' %>"
+        >Year</a
+      >
+      <a
+        href="/catalog?sort=model"
+        class="<%= currentSort === 'model' ? 'active' : '' %>"
+        >Model</a
+      >
+      <a
+        href="/catalog?sort=make"
+        class="<%= currentSort === 'make' ? 'active' : '' %>"
+        >Make</a
+      >
+      <a
+        href="/catalog?sort=price"
+        class="<%= currentSort === 'price' ? 'active' : '' %>"
+        >price</a
+      >
+      <a
+        href="/catalog?sort=category_name"
+        class="<%= currentSort === 'category_name' ? 'active' : '' %>"
+        >category</a
+      >
     </div>
+  </div>
+
+  <div class="vehicle-list">
+    <% vehicles.forEach(vehicle => { %>
+    <div class="vehicle-card">
+      <div>
+        <h2>
+          <a href="/catalog/<%= vehicle.slug %>"
+            ><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></a
+          >
+        </h2>
+        <p><%= vehicle.description %></p>
+      </div>
+      <img
+        src="/images/vehicles/<%= vehicle.slug %>.jpg"
+        alt="Photo of <%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %>"
+        class="vehicle-image"
+      />
+    </div>
+    <%}); %>
+  </div>
+</div>
 
 <%- include('../partials/footer') %>

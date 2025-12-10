@@ -39,6 +39,9 @@ const setHeadAssetsFunctionality = (res) => {
 const setLocals = (req, res) => {
     res.locals.NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
     res.locals.currentYear = new Date().getFullYear();
+
+    // Check if user is logged in via session
+    res.locals.loggedIn = req.session && req.session.user ? true : false;
 }
 
 const globalMiddleware = (req, res, next) => {

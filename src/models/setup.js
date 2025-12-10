@@ -139,7 +139,7 @@ const createUsersTableIfNotExists = `
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         email VARCHAR(255) UNIQUE NOT NULL,
-        password_hash VARCHAR(255) NOT NULL,
+        password VARCHAR(255) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
@@ -167,11 +167,10 @@ const addRoleIdToUsersIfNotExists = `
     END $$;
 `;
 
-const createSlug = (...strings) => {
-  return strings
-    .filter((str) => {
-      return str && typeof str === "string";
-    }) // Remove null/undefined/non-string values
+const createSlug = (...values) => {
+  return values
+    .filter((v) => v !== undefined && v !== null && v !== "") // remove null/undefined/empty
+    .map((v) => String(v)) // coerce numbers and other primitives to string
     .join(" ") // Join all strings with spaces
     .toLowerCase()
     .replace(/\s+/g, "-") // Replace spaces with hyphens
@@ -353,7 +352,7 @@ const seedRolesAndUsers = async (verbose = true) => {
         );
 
         const userRoleId = userRoleResult.rows[0].id;
-        const empolyeeRoleId = employeeRoleResult.rows[0].id;
+        const employeeRoleId = employeeRoleResult.rows[0].id;
         const ownerRoleId = ownerRoleResult.rows[0].id;
 
         // Update any existing users without a role_id to default user role
@@ -386,10 +385,10 @@ const seedRolesAndUsers = async (verbose = true) => {
             }
         }
         
-        // Check if admin user exists
+        // Check if empolyee user exists
         const employeeCheck = await db.query(
             'SELECT COUNT(*) FROM users WHERE role_id = $1',
-            [ownerRoleId]
+            [employeeRoleId]
         );
         const employeeCount = parseInt(employeeCheck.rows[0].count);
 
@@ -399,7 +398,7 @@ const seedRolesAndUsers = async (verbose = true) => {
             await db.query(`
                 INSERT INTO users (name, email, password, role_id) 
                 VALUES ($1, $2, $3, $4)
-            `, ['Employee User', 'employee@example.com', hashedPassword, ownerRoleId]);
+            `, ['Employee User', 'employee@example.com', hashedPassword, employeeRoleId]);
             if (verbose) {
                 console.log('Admin user created: employee@example.com / Test1234!');
             }
@@ -440,7 +439,7 @@ const seedRolesAndUsers = async (verbose = true) => {
 };
 
 const allTablesExists = async () => {
-  const tables = ["categories", "vehicles", "vehicle_images"];
+  const tables = ["categories", "vehicles"];
   const res = await db.query(
     `
         SELECT table_name
@@ -457,14 +456,18 @@ const lastSeedRowsExist = async () => {
   const lastVehicleSlug = createSlug(
     lastVehicle.make,
     lastVehicle.model,
-    lastVehicle.year
+    lastVehicle.year,
+    lastVehicle.id
   );
+
+  console.log(lastVehicleSlug);
+  
   const vehicleExists = await db.query(
     `SELECT 1 FROM vehicles WHERE slug = $1 LIMIT 1`,
     [lastVehicleSlug]
   );
 
-  if (vehicleExists.rowCount === 0) return false;
+  return vehicleExists.rowCount > 0;
 };
 
 const isAlreadyInitialized = async (verbose = true) => {
@@ -478,6 +481,7 @@ const isAlreadyInitialized = async (verbose = true) => {
   }
 
   const rowsOk = await lastSeedRowsExist();
+   
   return rowsOk;
 };
 
@@ -485,35 +489,36 @@ const setupDatabase = async () => {
   const verbose = process.env.ENABLE_SQL_LOGGING === "true";
 
   try {
+    // Always create all necessary tables first, regardless of whether schema exists
+    await db.query(createCategoriesTableIfNotExists);
+    await db.query(createVehiclesTableIfNotExists);
+    await insertContactForm(verbose);
+    await createRolesTable(verbose);
+    await insertUsersTable(verbose);
+    await addRoleIdColumnToUsers(verbose);
+    await instertServiceRequestsForm(verbose);
+    await instertReviewsForm(verbose);
+
+    // Then seed data if not already initialized
     if (await isAlreadyInitialized(verbose)) {
-      await insertContactForm(verbose);
-
-      await instertServiceRequestsForm(verbose);
-
-      await instertReviewsForm(verbose);
-
-      await createRolesTable(verbose);
-
-      await insertUsersTable(verbose);
-
-      await addRoleIdColumnToUsers(verbose);
-
+      if (verbose) console.log('DB already initialized — skipping data seeding.');
+      // Still seed roles and users even if already initialized (idempotent operation)
       await seedRolesAndUsers(verbose);
-      if (verbose) console.log('DB already initialized — skipping setup.');
-        return true;
+      return true;
     }
 
     if (verbose) console.log("Setting up database...");
 
-    await db.query(createCategoriesTableIfNotExists);
     for (const category of categories) {
       await insertCategory(category, verbose);
     }
 
-    await db.query(createVehiclesTableIfNotExists);
     for (const vehicle of vehicles) {
       await insertVehicle(vehicle, verbose);
     }
+
+    // Seed roles and users after initial setup
+    await seedRolesAndUsers(verbose);
 
     if (verbose) {
       console.log("Databse setup complete");

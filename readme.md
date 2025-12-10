@@ -61,7 +61,7 @@ Your database must include the following tables:
 - `id`  
 - `name`  
 - `email`  
-- `password_hash`  
+- `password`  
 - `role` — (`user`, `employee`, `owner`)  
 - Timestamps  
 
@@ -126,6 +126,7 @@ Role-based access control governs access to admin and employee routes.
 - `/auth`
 - `POST /register`
 - `POST /login`
+- `POST /logout`
 
 - `/vehicles`
 - `GET /`
