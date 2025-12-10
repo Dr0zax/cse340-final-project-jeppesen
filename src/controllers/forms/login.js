@@ -96,7 +96,7 @@ const processLogout = (req, res) => {
 };
 
 const addLoginSpecificStyles = (res) => {
-    res.addStyle('<link rel="stylesheet" href="/css/login.css">')
+    res.addStyle('<link rel="stylesheet" href="/css/pages/login.css">')
 }
 
 export { 

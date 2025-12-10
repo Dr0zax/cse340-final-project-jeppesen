@@ -30,42 +30,37 @@ const getAllVehicles = async () => {
 };
 
 /**
- * controller for getting a list of all vehicles from the database sorted by a specific field
+ * controller for getting a list of all vehicles from the database sorted by category
+ * @param {string} sortBy - the category to sort by (default is "suv")
  * @returns a list of sorted vehicles
  */
-const getSortedVehicles = async (sortBy = "year") => {
+const getSortedVehicles = async (sortBy) => {
   try {
-    const validSortFeilds = ["make", "model", "year", "price", "category_name"];
-    if (!validSortFeilds.includes(sortBy)) {
-      sortBy = "year";
-    }
+    let query;
+    let params = [];
 
-    let orderByClause;
-    switch (sortBy) {
-      case "make":
-        orderByClause = "v.make";
-        break;
-      case "model":
-        orderByClause = "v.model";
-        break;
-      case "year":
-        orderByClause = "v.year";
-        break;
-      case "price":
-        orderByClause = "v.price";
-        break;
-      default:
-        orderByClause = "v.year";
-    }
-
-    const query = `
+    // If caller requests 'all' (or passes a falsy value), return every
+    // vehicle ordered by category name. Otherwise return vehicles for a
+    // specific category (case-insensitive match).
+    if (!sortBy || String(sortBy).toLowerCase() === "all") {
+      query = `
             SELECT v.id, v.make, v.model, v.year, v.price, v.description, v.slug, c.name as category_name
-            FROM vehicles v 
+            FROM vehicles v
             JOIN categories c ON v.category_id = c.id
-            ORDER BY ${orderByClause}
-    `;
+            ORDER BY c.name ASC, v.make ASC, v.model ASC
+        `;
+    } else {
+      query = `
+            SELECT v.id, v.make, v.model, v.year, v.price, v.description, v.slug, c.name as category_name
+            FROM vehicles v
+            JOIN categories c ON v.category_id = c.id
+            WHERE LOWER(c.name) = LOWER($1)
+            ORDER BY v.make ASC, v.model ASC
+        `;
+      params = [sortBy];
+    }
 
-    const result = await db.query(query);
+    const result = await db.query(query, params);
     return result.rows.map((vehicle) => ({
       id: vehicle.id,
       make: vehicle.make,
@@ -78,6 +73,32 @@ const getSortedVehicles = async (sortBy = "year") => {
     }));
   } catch (error) {
     console.error("Error fetching sorted vehicles:", error);
+    throw error;
+  }
+};
+
+
+const getVehicleByCategory = async (categoryName) => {
+  try {
+    const query = `
+            SELECT v.id, v.make, v.model, v.year, v.price, v.description, v.slug, c.name as category_name
+            FROM vehicles v 
+            JOIN categories c ON v.category_id = c.id
+            WHERE c.name = $1
+        `;
+    const result = await db.query(query, [categoryName]);
+    return result.rows.map((vehicle) => ({
+      id: vehicle.id,
+      make: vehicle.make,
+      model: vehicle.model,
+      year: vehicle.year,
+      price: vehicle.price,
+      description: vehicle.description,
+      category: vehicle.category_name,
+      slug: vehicle.slug,
+    }));
+  } catch (error) {
+    console.error("Error fetching vehicle by category:", error);
     throw error;
   }
 };

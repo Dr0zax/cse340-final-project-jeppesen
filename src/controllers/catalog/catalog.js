@@ -1,7 +1,7 @@
 import { getSortedVehicles, getVehicleBySlug } from "../../models/catalog/catalog.js";
 
 const vehicleCatalogPage = async (req, res) => {
-    const currentSort = req.query.sort || "year";
+    const currentSort = req.query.category;
     const vehicles = await getSortedVehicles(currentSort);
     
     const title = "Catalog";
@@ -19,7 +19,7 @@ const vehicleDetailsPage = async (req, res) => {
 }
 
 const addCatalogSpecificStyles = (res) => {
-    res.addStyle('<link rel="stylesheet" href="/css/catalog.css">');
+    res.addStyle('<link rel="stylesheet" href="/css/pages/catalog.css">');
 }
 
 export { vehicleCatalogPage, vehicleDetailsPage };

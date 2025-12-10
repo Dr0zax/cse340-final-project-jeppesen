@@ -7,28 +7,25 @@
     <p>Explore our collection of <%= vehicles.length %> vehicles.</p>
     <div class="sort-options">
       <label for="sort-by">Sort by:</label>
-      <a href="/catalog" class="<%= currentSort === 'year' ? 'active' : '' %>"
-        >Year</a
+      <a
+        href="/catalog?category=suv"
+        class="<%= currentSort === 'suv' ? 'active' : '' %>"
+        >SUV</a
       >
       <a
-        href="/catalog?sort=model"
-        class="<%= currentSort === 'model' ? 'active' : '' %>"
-        >Model</a
+        href="/catalog?category=truck"
+        class="<%= currentSort === 'truck' ? 'active' : '' %>"
+        >Truck</a
       >
       <a
-        href="/catalog?sort=make"
-        class="<%= currentSort === 'make' ? 'active' : '' %>"
-        >Make</a
+        href="/catalog?category=sedan"
+        class="<%= currentSort === 'sedan' ? 'active' : '' %>"
+        >Sedan</a
       >
       <a
-        href="/catalog?sort=price"
-        class="<%= currentSort === 'price' ? 'active' : '' %>"
-        >price</a
-      >
-      <a
-        href="/catalog?sort=category_name"
-        class="<%= currentSort === 'category_name' ? 'active' : '' %>"
-        >category</a
+        href="/catalog?category=electric"
+        class="<%= currentSort === 'electric' ? 'active' : '' %>"
+        >Electric</a
       >
     </div>
   </div>

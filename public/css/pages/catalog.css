@@ -59,14 +59,14 @@
             align-items: center;
 
             a {
-                 text-decoration: none;
-                background-color: #ddd;
+                text-decoration: none;
+                background-color: var(--background-color);
                 padding: 10px 15px;
-                border-bottom: 5px solid #A6B1E1;
+                border-bottom: 5px solid var(--primary-color);
                 color: #333;
 
                 &.active {
-                    background-color: #A6B1E1;
+                    background-color: var(--primary-color);
                 }
             }
         }

@@ -4,19 +4,19 @@ import { hashPassword } from "./forms/registration.js";
 const categories = [
   {
     id: 1,
-    name: "Sedan",
+    name: "sedan",
   },
   {
     id: 2,
-    name: "SUV",
+    name: "suv",
   },
   {
     id: 3,
-    name: "Truck",
+    name: "truck",
   },
   {
     id: 4,
-    name: "Electric",
+    name: "electric",
   },
 ];
 

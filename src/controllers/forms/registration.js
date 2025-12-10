@@ -196,7 +196,7 @@ const processDeleteAccount = async (req, res) => {
 };
 
 const addRegistrationSpecificStyles = (res) => {
-    res.addStyle('<link rel="stylesheet" href="/css/registration.css">')
+    res.addStyle('<link rel="stylesheet" href="/css/pages/registration.css">')
 }
 
 export { showRegistrationForm, processRegistration, showAllUsers, showEditAccountForm, processEditAccount, processDeleteAccount };

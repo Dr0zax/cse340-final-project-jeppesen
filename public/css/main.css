@@ -1,3 +1,12 @@
+@layer base, components;
+
+@import 'base/colors.css' layer(base);
+
+@import 'pages/catalog.css' layer(components);
+@import 'pages/contact.css' layer(components);
+@import 'pages/login.css' layer(components);
+@import 'pages/registration.css' layer(components);
+
 html, body {
     margin: 0;
     padding: 0;
@@ -20,9 +29,9 @@ body {
 
         a {
             text-decoration: none;
-            background-color: #ddd;
+            background-color: var(--background-color);
             padding: 10px 15px;
-            border-bottom: 5px solid #A6B1E1;
+            border-bottom: 5px solid var(--primary-color);
             color: #333;
         }
     }

@@ -6,7 +6,7 @@ const showContactForm = (req, res) => {
 }
 
 const addContactSpecificStyles = (res) => {
-    res.addStyle('<link rel="stylesheet" href="/css/contact.css">')
+    res.addStyle('<link rel="stylesheet" href="/css/pages/contact.css">')
 }
 
 export { showContactForm }
