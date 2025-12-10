@@ -34,7 +34,7 @@ const vehicles = [
   {
     id: 2,
     make: "Honda",
-    model: "CR-V",
+    model: "CRV",
     year: 2021,
     price: 28950.0,
     description: "Compact SUV with spacious interior and great reliability.",
@@ -203,7 +203,7 @@ const insertCategory = async (entry, verbose = true) => {
 };
 
 const insertVehicle = async (vehicle, verbose) => {
-  const slug = createSlug(vehicle.make, vehicle.model, vehicle.year.toString());
+  const slug = createSlug(vehicle.make, vehicle.model, vehicle.year.toString(), vehicle.id.toString());
 
   const { category_id } = vehicle;
   if (category_id === undefined || category_id === null) {
@@ -535,4 +535,4 @@ const testConnection = async () => {
   }
 };
 
-export { setupDatabase, testConnection };
+export { setupDatabase, testConnection, createSlug };

@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+    <h1><%= title %></h1>
+
+    <div class="vehicle-detail">
+        <div>
+            <p><strong>Make:</strong> <%= vehicle.make %></p>
+            <p><strong>Model:</strong> <%= vehicle.model %></p>
+            <p><strong>Year:</strong> <%= vehicle.year %></p>
+            <p><strong>Price:</strong> <%= vehicle.price %></p>
+            <p><strong>Description:</strong> <%= vehicle.description %></p>
+        </div>
+         <img 
+                src="/images/vehicles/<%= vehicle.slug %>.jpg" 
+                alt="Photo of <%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %>"
+                class="vehicle-image"
+                >
+    </div>
+
+<%- include('../partials/footer') %>
