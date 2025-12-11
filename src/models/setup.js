@@ -459,8 +459,6 @@ const lastSeedRowsExist = async () => {
     lastVehicle.year,
     lastVehicle.id
   );
-
-  console.log(lastVehicleSlug);
   
   const vehicleExists = await db.query(
     `SELECT 1 FROM vehicles WHERE slug = $1 LIMIT 1`,

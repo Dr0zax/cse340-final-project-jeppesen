@@ -124,7 +124,6 @@ const getVehicleBySlug = async (vehicleSlug) => {
     }
 
     const vehicle = result.rows[0];
-    console.log(vehicle);
 
     return {
       id: vehicle.id,

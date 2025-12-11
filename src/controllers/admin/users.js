@@ -43,7 +43,6 @@ const processEditAccount = async (req, res) => {
 
     // Check for validation errors
     if (!results.isEmpty()) {
-        console.log("error");
         return res.redirect(`/user/${req.params.id}/edit`);
     }
 

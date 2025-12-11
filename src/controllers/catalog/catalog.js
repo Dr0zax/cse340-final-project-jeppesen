@@ -12,7 +12,6 @@ const vehicleCatalogPage = async (req, res) => {
 const vehicleDetailsPage = async (req, res) => {
     const slug = req.params.vehicleSlug;
     const vehicle = await getVehicleBySlug(slug);
-    console.log(slug, vehicle);
     const title = `${vehicle.year} ${vehicle.make} ${vehicle.model}`;
     addCatalogSpecificStyles(res);
     res.render("catalog/detail", { title, vehicle });

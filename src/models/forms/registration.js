@@ -134,7 +134,6 @@ const updateUser = async (id, name, email) => {
         `;
 
         const result = await db.query(query, [name, email, id]);
-        console.log(result);
         return result.rows[0] || null;
     } catch (error) {
         console.error('DB Error in updateUser:', error);
