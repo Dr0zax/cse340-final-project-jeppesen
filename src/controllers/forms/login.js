@@ -47,7 +47,7 @@ const processLogin = async (req, res) => {
 
     console.log('Logged In!');
     
-    res.redirect('/');
+    res.redirect('/dashboard');
 };
 
 /**
@@ -95,12 +95,37 @@ const processLogout = (req, res) => {
     });
 };
 
+/**
+ * Display protected dashboard (requires login)
+ */
+const showDashboard = (req, res) => {
+    const user = req.session.user;
+    const sessionData = req.session;
+
+    if (user.password && sessionData.password) {
+        user.password = null;
+        delete user.password;
+        sessionData.password = null;
+        delete sessionData.password;
+    }
+
+
+    addLoginSpecificStyles(res);
+
+    res.render('forms/login/dashboard', {
+        title: "Dashboard",
+        user,
+        sessionData
+    })
+};
+
 const addLoginSpecificStyles = (res) => {
-    res.addStyle('<link rel="stylesheet" href="/css/pages/login.css">')
+    res.addStyle('<link rel="stylesheet" href="/css/pages/dashboard.css">')
 }
 
 export { 
     showLoginForm, 
     processLogin, 
     processLogout, 
+    showDashboard
 };

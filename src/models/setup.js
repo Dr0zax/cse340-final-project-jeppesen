@@ -126,8 +126,8 @@ const createServiceRequestsTableIfNotExists = `
 const createContactTableIfNotExists = `
     CREATE TABLE IF NOT EXISTS contact_form (
         id SERIAL PRIMARY KEY,
-        name VARCHAR(200) NOT NULL,
-        email VARCHAR(200) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        subject VARCHAR(255) NOT NULL,
         message TEXT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

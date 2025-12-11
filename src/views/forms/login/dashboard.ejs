@@ -1,0 +1,42 @@
+<%- include('../../partials/header') %>
+    <div class="dashboard">
+        <h1>Welcome <%= user.name %>!</h1>
+        
+
+
+        <% if (sessionData.user.role_name === 'owner' || sessionData.user.role_name === 'employee') { %>
+            <h2>Admin Pannel</h2>
+            <div class="admin-panel">
+            <a href="/admin/users">Manage Users</a>
+                <a href="/admin/service-requests">Manage Service Requests</a>
+                <a href="/admin/reviews">Manage Reviews</a>
+
+            </div>
+        <% } %>
+
+        <h2>Your Account Information</h2>
+        <div class="user-info">
+            <div class="user-detail">
+                <p class="label">Name</p>
+                <p class="value"><%= user.name %></p>
+            </div>
+             <div class="user-detail">
+                <p class="label">Email</p>
+                <p class="value"><%= user.email %></p>
+            </div>
+             <div class="user-detail">
+                <p class="label">Created At</p>
+                <p class="value"><%= new Date(user.created_at).toLocaleString() %></p>
+            </div>
+        </div>
+
+        <div class="dashboard-actions">
+            <a href="/review">Leave a Review</a>
+            <a href="/service-request"> Service Requests</a>
+            <a href="/dashboard/edit" >Edit Profile</a>
+            <a href="/dashboard/change-password" >Change Password</a>
+        </div>
+
+        </div>
+    </div>
+<%- include('../../partials/footer') %>

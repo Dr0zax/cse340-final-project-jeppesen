@@ -8,6 +8,11 @@
     <div class="sort-options">
       <label for="sort-by">Sort by:</label>
       <a
+        href="/catalog?category"
+        class="<%= currentSort === '' ? 'active' : '' %>"
+        >All</a
+      >
+      <a
         href="/catalog?category=suv"
         class="<%= currentSort === 'suv' ? 'active' : '' %>"
         >SUV</a

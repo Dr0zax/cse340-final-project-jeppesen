@@ -18,7 +18,6 @@ const requireLogin = (req, res, next) => {
 /**
  * Middleware factory to require specific role for route access
  * Returns middleware that checks if user has the required role
- * Uses flash messages to communicate authorization failures
  * 
  * @param {string} roleName - The role name required (e.g., 'admin', 'user')
  * @returns {Function} Express middleware function

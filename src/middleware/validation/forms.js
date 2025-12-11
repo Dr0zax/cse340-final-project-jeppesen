@@ -1,5 +1,8 @@
 import { body } from "express-validator";
 
+/**
+ * Validation rules for registration form submission
+ */
 const registrationValidationRules = [
   body('name')
         .trim()
@@ -39,6 +42,9 @@ const registrationValidationRules = [
         })
 ];
 
+/**
+ * Validation rules for login form submission
+ */
 const loginValidationRules = [
   body("email")
     .trim()
@@ -50,4 +56,25 @@ const loginValidationRules = [
     .withMessage("Password must be at least 8 characters long"),
 ];
 
-export { registrationValidationRules, loginValidationRules };
+/**
+ * Validation rules for contact form submission
+ */
+const contactValidation = [
+    body('subject')
+        .trim()
+        .isLength({ min: 2 })
+        .withMessage('Subject must be at least 2 characters long'),
+
+    body('message')
+        .trim()
+        .isLength({ min: 10 })
+        .withMessage('Message must be at least 10 characters long'),
+
+    body('email')
+        .trim()
+        .isEmail()
+        .withMessage('Please provide a valid email address')
+        .normalizeEmail()
+];
+
+export { registrationValidationRules, loginValidationRules, contactValidation };

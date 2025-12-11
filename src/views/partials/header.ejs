@@ -26,13 +26,12 @@
     <header>
         <nav>
             <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/catalog">Vehicle Catalog</a></li>
-                <li><a href="/contact">Contact Us</a></li>
+                <li><a class="<%= activeRoute === '/' ? 'active' : '' %>"href="/">Home</a></li>
+                <li><a class="<%= activeRoute === '/catalog' ? 'active' : '' %>"href="/catalog">Vehicle Catalog</a></li>
+                <li><a class="<%= activeRoute === '/contact' ? 'active' : '' %>"href="/contact">Contact Us</a></li>
 
                 <% if (loggedIn) { %>
-                    <li><a href="/reviews">Reviews</a></li>
-                    <li><a href="/service-requests">Service Requests</a></li>
+                    <li><a class="<%= activeRoute === '/dashboard' ? 'active' : '' %>" href="/dashboard">Dashboard</a></li>
                     <li><a href="/logout">Logout</a></li>
                 <% } else { %>
                     <li><a href="/login">Login</a></li>
