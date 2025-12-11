@@ -35,8 +35,10 @@
                 <a href="/review">Leave a Review</a>
                 <a href="/service-request"> Service Requests</a>
             <% } %>
-            <a href="/dashboard/edit" >Edit Profile</a>
-            <a href="/dashboard/change-password" >Change Password</a>
+            <a href="/user/<%= sessionData.user.id %>/edit">Edit Profile</a>
+            <form action="/user/<%= sessionData.user.id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                <button class="delete-button" type="submit">Delete</button>
+            </form>
         </div>
 
         </div>

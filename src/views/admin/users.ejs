@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+
+<h1><%= title %></h1>
+
+<div class="users">
+  <div class="users-list">
+    <% users.forEach(function(user) { %>
+    <div class="user-card">
+      <h2><%= user.name %></h2>
+      <p>Email: <%= user.email %></p>
+      <p>Role: <%= user.role_name %></p>
+      <p class="date-info">
+        Created At: <%= new Date(user.created_at).toLocaleDateString() %>
+      </p>
+      <p class="date-info">
+        Updated At: <%= new Date(user.updated_at).toLocaleDateString() %>
+      </p>
+      <div class="user-actions">
+        <a href="/users/<%= user.id %>/edit">Edit User</a>
+        <form action="/user/<%= user.id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                <button class="delete-button" type="submit">Delete</button>
+        </form>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

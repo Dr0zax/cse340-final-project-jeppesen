@@ -53,12 +53,12 @@ const saveUser = async (name, email, password) => {
         const hashedPassword = await hashPassword(password);
 
         const query = `
-        INSERT INTO users (name, email, password)
-        VALUES ($1, $2, $3)
+        INSERT INTO users (name, email, password, role_id)
+        VALUES ($1, $2, $3, $4)
         RETURNING *;
         `;
 
-        const values = [name, email, hashedPassword];
+        const values = [name, email, hashedPassword, 1]; // Default role_id = 1 (customer)
         const result = await db.query(query, values);
         return result.rows[0];
 
@@ -75,8 +75,9 @@ const saveUser = async (name, email, password) => {
 const getAllUsers = async () => {
     try {
         const query = `
-        SELECT id, name, email, created_at, updated_at
+        SELECT users.id, users.name, users.email, users.created_at, users.updated_at, roles.role_name
         FROM users
+        INNER JOIN roles ON users.role_id = roles.id
         ORDER BY created_at DESC
         `
 
@@ -133,6 +134,7 @@ const updateUser = async (id, name, email) => {
         `;
 
         const result = await db.query(query, [name, email, id]);
+        console.log(result);
         return result.rows[0] || null;
     } catch (error) {
         console.error('DB Error in updateUser:', error);

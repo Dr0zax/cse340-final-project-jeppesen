@@ -1,0 +1,26 @@
+<%- include('../../partials/header') %>
+
+    <h1><%= title %></h1>
+    <p>
+        Edit your account information by updating the fields below. All fields are required and passwords must meet security requirements.
+    </p>
+
+    <form method="POST" action="/user/<%= user.id %>/edit" class="edit-form">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="John Doe" minlength="7" value="<%= user.name %>"  required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="example@email.com" value="<%= user.email %>" required>
+        </div>
+
+        <button type="submit">Update</button>
+    </form>
+
+    <div class="navigation">
+        <p><a href="/dashboard">&larr; Back to Dashboard</a></p>
+    </div>
+
+<%- include('../../partials/footer') %>
