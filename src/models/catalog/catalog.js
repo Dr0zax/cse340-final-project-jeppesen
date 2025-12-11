@@ -10,7 +10,7 @@ const getAllVehicles = async () => {
             SELECT v.id, v.make, v.model, v.year, v.price, v.description, v.slug, c.name as category
             FROM vehicles v 
             JOIN categories c ON v.category_id = c.id
-            ORDER BY ${orderByClause} ASC
+            ORDER BY v.year ASC
         `;
     const result = await db.query(query);
     return result.rows.map((vehicle) => ({

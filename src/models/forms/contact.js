@@ -30,13 +30,19 @@ const saveContactForm = async (subject, message, email) => {
  */
 const getAllContactForms = async () => {
     const query = `
-        SELECT id, subject, message, submitted
+        SELECT id, email, subject, message, created_at
         FROM contact_form
-        ORDER BY submitted DESC
+        ORDER BY created_at DESC
     `;
 
     const result = await db.query(query);
-    return result.rows;
+    return result.rows.map(response => ({
+        id: response.id,
+        email: response.email,
+        subject: response.subject,
+        message: response.message,
+        created_at: response.created_at.toISOString()
+    }));
 };
 
 export { saveContactForm, getAllContactForms };

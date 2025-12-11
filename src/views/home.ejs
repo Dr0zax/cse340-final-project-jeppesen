@@ -1,10 +1,22 @@
 <%- include('partials/header') %>
 
-<section id="hero">
-    <h1><%= title %></h1>
-    <p>Find your dream car from our extensive catalog.</p>
+<h1><%= title %></h1>
+<p>Find your dream car from our extensive catalog.</p>
 
-    // TODO: implement a featured vehicle section here that randomly selects a Vehicle from the catalog
-</section>
+<!-- TODO: implement a featured vehicle section here that randomly selects a Vehicle from the catalog -->
+<div class="featured-vehicle">
+  <h2>
+    Featured:
+    <a href="/catalog/<%= featuredVehicle.slug %>"
+      ><%= featuredVehicle.year %> <%= featuredVehicle.make %> <%=
+      featuredVehicle.model %></a
+    >
+  </h2>
+  <img
+    src="/images/vehicles/<%= featuredVehicle.slug %>.jpg"
+    alt="<%= featuredVehicle.make %> <%= featuredVehicle.model %>"
+    class="vehicle-image"
+  />
+</div>
 
 <%- include('partials/footer') %>

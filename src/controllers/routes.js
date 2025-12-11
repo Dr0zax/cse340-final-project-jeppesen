@@ -5,6 +5,7 @@ import { showContactForm } from './forms/contact.js';
 import { showRegistrationForm, processRegistration } from './forms/registration.js';
 import { showLoginForm, processLogin, processLogout, showDashboard } from './forms/login.js';
 import { processContactForm } from './forms/contact.js';
+import { contactResponsesPage } from './admin/responses.js';
 import { registrationValidationRules, loginValidationRules, contactValidation } from "../middleware/validation/forms.js";
 import { requireLogin, requireRole } from "../middleware/auth.js";
 
@@ -26,5 +27,7 @@ router.post("/login", loginValidationRules, processLogin);
 router.get("/logout", processLogout);
 
 router.get('/dashboard', requireLogin, showDashboard);
+router.get('/admin/contact-responses', requireLogin, requireRole('owner' || 'employee'), contactResponsesPage);
+
 
 export default router;

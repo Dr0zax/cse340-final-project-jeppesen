@@ -7,10 +7,10 @@
         <% if (sessionData.user.role_name === 'owner' || sessionData.user.role_name === 'employee') { %>
             <h2>Admin Pannel</h2>
             <div class="admin-panel">
-            <a href="/admin/users">Manage Users</a>
+                <a href="/admin/users">Manage Users</a>
                 <a href="/admin/service-requests">Manage Service Requests</a>
                 <a href="/admin/reviews">Manage Reviews</a>
-
+                <a href="/admin/contact-responses">Manage Contact Messages</a>
             </div>
         <% } %>
 
@@ -31,8 +31,10 @@
         </div>
 
         <div class="dashboard-actions">
-            <a href="/review">Leave a Review</a>
-            <a href="/service-request"> Service Requests</a>
+            <% if (sessionData.user.role_name === 'user') { %>
+                <a href="/review">Leave a Review</a>
+                <a href="/service-request"> Service Requests</a>
+            <% } %>
             <a href="/dashboard/edit" >Edit Profile</a>
             <a href="/dashboard/change-password" >Change Password</a>
         </div>

@@ -1,0 +1,28 @@
+.featured-vehicle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .vehicle-image {
+        width: 500px;
+        display: block;
+        margin-left: 1rem;
+        padding-left: 10px;
+        background-color: url('https://placehold.co/480');
+    }
+
+    a {
+        text-decoration: none;
+        color: var(--primary-color);
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

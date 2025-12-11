@@ -40,7 +40,9 @@ const setLocals = (req, res) => {
     res.locals.NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
     res.locals.currentYear = new Date().getFullYear();
 
-    res.locals.activeRoute = req.path; // Set the active page based on the request path
+    res.locals.activeRoute = req.path; 
+
+    res.locals.darkMode = req.cookies && req.cookies.darkMode ? true : false;
 
     // Check if user is logged in via session
     res.locals.loggedIn = req.session && req.session.user ? true : false;
