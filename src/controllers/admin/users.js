@@ -88,35 +88,29 @@ const processEditAccount = async (req, res) => {
 };
 
 /**
- * Delete a user account (admin or account-owner only)
+ * Delete a user account (user can delete own account, owner can delete any)
  */
 const processDeleteAccount = async (req, res) => {
     const targetUserId = parseInt(req.params.id);
     const currentUser = req.session.user;
 
-    // TODO: Verify current user is an admin
-    // Only admins should be able to delete accounts
-    // If not admin, set flash message and redirect
-    if (currentUser.role_name !== 'owner' || currentUser.id === targetUserId) {
+    // User can delete their own account OR owner can delete any account
+    const canDelete = (currentUser.id === targetUserId) || (currentUser.role_name === 'owner');
+
+    if (!canDelete) {
         return res.redirect('/dashboard');
     }
 
-    // TODO: Prevent admins from deleting their own account
-    // If targetUserId === currentUser.id, set flash message and redirect
-    //
-    // req.flash:
-    //     type = error
-    //     message = You cannot delete your own account.
-    if (targetUserId === currentUser.id) {
-        return res.redirect('/dashboard');
-    }
-
-    // TODO: Delete the user using deleteUser function
-    // If delete fails, set flash message and redirect
     const deleteSuccess = await deleteUser(targetUserId);
 
     if (!deleteSuccess) {
         return res.redirect('/dashboard');
+    }
+
+    // If user deleted their own account, destroy session and redirect to home
+    if (currentUser.id === targetUserId) {
+        req.session.destroy();
+        return res.redirect('/');
     }
 
     res.redirect('/dashboard');

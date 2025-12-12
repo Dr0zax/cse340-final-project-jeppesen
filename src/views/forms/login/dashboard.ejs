@@ -35,9 +35,10 @@
                 <% } %>
             <a href="/service-requests">View Service Requests</a>
             <a href="/user/<%= sessionData.user.id %>/edit">Edit Profile</a>
-            <form action="/user/<%= sessionData.user.id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+            <form action="/user/<%= user.id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
                 <button class="delete-button" type="submit">Delete</button>
             </form>
+        </form>
         </div>
 
         </div>
