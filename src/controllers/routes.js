@@ -2,7 +2,7 @@ import { Router } from "express";
 import { homePage } from "./index.js";
 import { vehicleCatalogPage, vehicleDetailsPage } from './catalog/catalog.js';
 import { showContactForm, processContactForm  } from './forms/contact.js';
-import { showReviewForm, processReview, showUpdateReviewForm } from './forms/review.js';
+import { showReviewForm, processReview, showUpdateReviewForm, processDeleteReview } from './forms/review.js';
 import { showServiceRequestForm, processServiceRequest } from './forms/service-request.js';
 import { showServiceRequestsPage } from "./admin/service-requests.js";
 import { showRegistrationForm, processRegistration } from './forms/registration.js';
@@ -25,8 +25,8 @@ router.post('/contact', contactValidation, processContactForm);
 
 router.get('/review', showReviewForm);
 router.post('/review', reviewValidation, processReview);
+router.post('/review/:id/delete', processDeleteReview)
 router.get('/reviews', reviewResponsesPage);
-// router.put('/reviews/:id', requireLogin, updateReview);
 
 router.get('/service-request', requireLogin, showServiceRequestForm);
 router.post('/service-request', requireLogin, serviceRequestValidation, processServiceRequest);

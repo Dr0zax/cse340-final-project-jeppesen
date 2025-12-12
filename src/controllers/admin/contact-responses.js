@@ -7,7 +7,7 @@ const contactResponsesPage = async (req, res) =>{
 }
 
 const addResponsesSpecificStyles = (res) => {
-    res.addStyle('<link rel="stylesheet" href="/css/pages/responses.css">');
+    res.addStyle('<link rel="stylesheet" href="/css/pages/contact-responses.css">');
 }
 
 export { contactResponsesPage };

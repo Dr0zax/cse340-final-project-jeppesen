@@ -87,4 +87,25 @@ const updateReview = async (review_id, rating, comment) => {
     }
 };
 
-export { saveReviewForm, getAllReviews, updateReview };
+/**
+ * Delete a review by id
+ * @param {number} review_id
+ * @returns {Promise<Object|null>} The deleted review entry or null
+*/
+const deleteReview = async (review_id) => {
+    const query = `
+    DELETE FROM reviews
+    WHERE id = $1
+    RETURNING id, user_id, vehicle_slug, rating, comment, created_at
+    `;
+    
+    try {
+        const result = await db.query(query, [review_id]);
+        return result.rows[0] || null;
+    } catch (error) {
+        console.error('DB Error in deleteReview:', error);
+        return null;
+    }
+};
+
+export { saveReviewForm, getAllReviews, updateReview, deleteReview };

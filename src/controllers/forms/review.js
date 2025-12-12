@@ -1,5 +1,5 @@
 import { validationResult } from "express-validator";
-import { saveReviewForm} from "../../models/forms/review.js";
+import { saveReviewForm, deleteReview } from "../../models/forms/review.js";
 import { getAllVehicles } from "../../models/catalog/catalog.js";
 
 const showReviewForm = async (req, res) => { 
@@ -32,8 +32,31 @@ const showUpdateReviewForm = async (req, res) => {
 
 }
 
+const processDeleteReview = async (req, res) => {
+    // allow id from route param or form body
+    const reviewId = req.params.id || req.body.id;
+
+    if (!reviewId) {
+        return res.redirect('/reviews');
+    }
+
+    try {
+        const deleted = await deleteReview(reviewId);
+
+        if (!deleted) {
+            // deletion failed or nothing was deleted
+            return res.redirect('/reviews');
+        }
+
+        return res.redirect('/reviews');
+    } catch (error) {
+        console.error('Error deleting review:', error);
+        return res.redirect('/reviews');
+    }
+};
+
 const addReviewSpecificStyles = (res) => {
     res.addStyle('<link rel="stylesheet" href="/css/pages/review.css">')
 }
 
-export {showReviewForm, processReview, showUpdateReviewForm};
+export {showReviewForm, processReview, showUpdateReviewForm, processDeleteReview};

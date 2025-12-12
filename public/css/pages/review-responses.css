@@ -45,6 +45,27 @@
             margin: 0;
             font-weight: 500;
         }
+
+        .actions-panel {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+
+                a, button {
+                    border: none;
+                    text-decoration: none;
+                    background-color: var(--primary-color);
+                    padding: 10px 15px;
+                    color: var(--background-color);
+                    font-size: 16px;
+                    
+                    transition: box-shadow 0.3s ease;
+
+                    &:hover {
+                        box-shadow: 0 0 5px var(--primary-color);
+                    }
+                }
+            }
     }
 
     .no-responses {
