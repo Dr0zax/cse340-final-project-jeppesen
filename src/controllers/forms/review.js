@@ -28,10 +28,6 @@ const processReview = async (req, res) => {
     res.redirect('/review');
 }
 
-const showUpdateReviewForm = async (req, res) => {
-
-}
-
 const processDeleteReview = async (req, res) => {
     // allow id from route param or form body
     const reviewId = req.params.id || req.body.id;

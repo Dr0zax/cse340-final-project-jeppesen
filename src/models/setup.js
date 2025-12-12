@@ -337,7 +337,7 @@ const seedRolesAndUsers = async (verbose = true) => {
                 ('owner', 'Full access to all system features and settings')
             `);
             if (verbose) {
-                console.log('Roles seeded: user and admin');
+                console.log('Roles seeded: user, employer, owner');
             }
         }
 

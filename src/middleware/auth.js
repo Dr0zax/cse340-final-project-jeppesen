@@ -36,4 +36,22 @@ const requireRole = (roleName) => {
     };
 };
 
-export { requireLogin, requireRole };
+/**
+ * Middleware factory to require any one of the provided roles
+ * Usage: requireRoles('owner', 'employee')
+ */
+const requireRoles = (...roles) => {
+    return (req, res, next) => {
+        if (!req.session || !req.session.user) {
+            return res.redirect('/login');
+        }
+
+        if (!roles.includes(req.session.user.role_name)) {
+            return res.redirect('/');
+        }
+
+        next();
+    };
+};
+
+export { requireLogin, requireRole, requireRoles };
