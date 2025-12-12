@@ -118,6 +118,8 @@ Role-based access control governs access to admin and employee routes.
 - **Test User 1**: user1@example.com
 - **Test User 2**: user2@example.com
 
+---
+
 ## API Structure
 
 - Public routes:
