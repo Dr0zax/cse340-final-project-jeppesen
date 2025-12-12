@@ -16,7 +16,8 @@ Accessible to all visitors:
 - **Home Page** showing featured vehicles  
 - **Catalog:** Trucks, Vans, Cars, SUVs  
 - **Vehicle Detail Pages:** Image gallery, full specs, pricing  
-- **Contact Form:** User inquiries saved to the database  
+- **Contact Form:** User inquiries saved to the database
+- **Dashboard:** Access user information, leave reviews, and service requests
 
 ---
 
@@ -24,32 +25,18 @@ Accessible to all visitors:
 Logged-in users can:
 
 - **Leave reviews** on vehicles  
-- **Edit/Delete their own reviews**  
+- **Delete their own reviews**  
 - **Submit service requests** (oil changes, inspections, repairs, etc.)  
-- **View their service request history** with statuses  
-  - *Submitted → In Progress → Completed*  
 
 ---
 
-### Employee Dashboard  
+### Owner and Employee Dashboard  
 Employees have elevated permissions to manage site content and user submissions:
 
-- **Edit vehicle details:** price, description, availability  
 - **Moderate/Delete user reviews**  
 - **View & manage service requests**  
 - **Update service request statuses**  
-- **Add internal notes** to service requests  
 - **View all contact form submissions**
-
----
-
-### Owner Dashboard (Full Admin Access)  
-Owners have full system control, including everything employees can do *plus*:
-
-- **Manage categories:** Add, edit, delete categories  
-- **Manage inventory:** Add, edit, delete vehicles  
-- **Manage employee accounts** (optional — may be hardcoded)  
-- **View all system activity and user data**
 
 ---
 
@@ -73,22 +60,18 @@ Your database must include the following tables:
 - `id`  
 - `category_id` (FK → Categories)  
 - `make`  
-- `model`  
+- `model`
+- `slug`
 - `year`  
 - `price`  
 - `description`  
 - `availability`  
 - Timestamps  
 
-### **Vehicle Images**  
-- `id`  
-- `vehicle_id` (FK → Vehicles)  
-- `image_path`  
-
 ### **Reviews**  
 - `id`  
 - `user_id` (FK → Users)  
-- `vehicle_id` (FK → Vehicles)  
+- `vehicle_slug`
 - `rating`  
 - `comment`  
 - Timestamps  
@@ -105,8 +88,8 @@ Your database must include the following tables:
 
 ### **Contact Messages**  
 - `id`  
-- `name`  
-- `email`  
+- `email`
+- `subject`
 - `message`  
 - Timestamps  
 
