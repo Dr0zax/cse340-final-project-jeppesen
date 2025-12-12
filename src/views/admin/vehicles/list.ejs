@@ -1,0 +1,41 @@
+<%- include('../../partials/header') %>
+
+<div class="vehicle-management">
+    <h1><%= title %></h1>
+    
+    <div class="action-bar">
+        <a href="/admin/vehicles/add" class="btn-primary">Add New Vehicle</a>
+    </div>
+
+    <% if (vehicles && vehicles.length > 0) { %>
+        <div class="vehicles-list">
+            <% vehicles.forEach(function(vehicle) { %>
+            <div class="vehicle-card">
+                <div class="vehicle-header">
+                    <h2><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></h2>
+                    <span class="category-badge"><%= vehicle.category %></span>
+                </div>
+                
+                <div class="vehicle-details">
+                    <p><strong>Price:</strong> $<%= parseFloat(vehicle.price).toFixed(2) %></p>
+                    <p><strong>Description:</strong> <%= vehicle.description %></p>
+                    <p class="vehicle-slug"><strong>Slug:</strong> <%= vehicle.slug %></p>
+                </div>
+
+                <div class="vehicle-actions">
+                    <form action="/admin/vehicles/<%= vehicle.id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this vehicle? This action cannot be undone.');">
+                        <button class="delete-button" type="submit">Delete Vehicle</button>
+                    </form>
+                </div>
+            </div>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <div class="empty-state">
+            <p>No vehicles found in the inventory.</p>
+            <a href="/admin/vehicles/add" class="btn-primary">Add the first vehicle</a>
+        </div>
+    <% } %>
+</div>
+
+<%- include('../../partials/footer') %>

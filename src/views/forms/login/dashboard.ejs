@@ -9,6 +9,9 @@
             <div class="admin-panel">
                 <a href="/admin/users">Manage Users</a>
                 <a href="/admin/contact-responses">Manage Contact Messages</a>
+                <% if (sessionData.user.role_name === 'owner') { %>
+                    <a href="/admin/vehicles">Manage Catalog</a>
+                <% } %>
             </div>
         <% } %>
 

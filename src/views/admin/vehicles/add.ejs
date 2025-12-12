@@ -1,0 +1,47 @@
+<%- include('../../partials/header') %>
+<h1>Add Vehicle</h1>
+<p>Use the form below to add a new vehicle to the inventory.</p>
+
+<form method="POST" action="/admin/vehicles/add" class="vehicle-form">
+    <div class="form-group">
+        <label for="make">Make</label>
+        <input type="text" id="make" name="make" placeholder="e.g., Toyota" minlength="1" maxlength="50" required>
+    </div>
+
+    <div class="form-group">
+        <label for="model">Model</label>
+        <input type="text" id="model" name="model" placeholder="e.g., Camry" minlength="1" maxlength="50" required>
+    </div>
+
+    <div class="form-group">
+        <label for="year">Year</label>
+        <input type="number" id="year" name="year" placeholder="e.g., 2022" min="1900" max="2100" required>
+    </div>
+
+    <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" id="price" name="price" placeholder="e.g., 24999.99" step="0.01" min="0" required>
+    </div>
+
+    <div class="form-group">
+        <label for="category_id">Category</label>
+        <select id="category_id" name="category_id" required>
+            <option value="">Select a category</option>
+            <% categories.forEach(category => { %>
+                <option value="<%= category.id %>"><%= category.name %></option>
+            <% }); %>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="4" placeholder="Enter a brief description of the vehicle..." minlength="10" maxlength="500" required></textarea>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn-primary">Add Vehicle</button>
+        <a href="/admin/vehicles" class="btn-secondary">Cancel</a>
+    </div>
+</form>
+
+<%- include('../../partials/footer') %>

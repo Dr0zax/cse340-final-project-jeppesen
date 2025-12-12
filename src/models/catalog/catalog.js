@@ -139,4 +139,87 @@ const getVehicleBySlug = async (vehicleSlug) => {
   } catch {}
 };
 
-export { getAllVehicles, getSortedVehicles, getVehicleBySlug };
+/**
+ * Get all categories from the database
+ * @returns a list of all categories
+ */
+const getCategories = async () => {
+  try {
+    const query = `SELECT id, name FROM categories ORDER BY name ASC`;
+    const result = await db.query(query);
+    return result.rows;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    throw error;
+  }
+};
+
+/**
+ * Generate a slug from make, model, and year
+ * Converts to lowercase and replaces spaces with hyphens
+ */
+const generateSlug = (make, model, year) => {
+  return `${make}-${model}-${year}`.toLowerCase().replace(/\s+/g, '-');
+};
+
+/**
+ * Add a new vehicle to the database
+ * @param {string} make - Vehicle make
+ * @param {string} model - Vehicle model
+ * @param {number} year - Vehicle year
+ * @param {number} price - Vehicle price
+ * @param {string} description - Vehicle description
+ * @param {number} categoryId - Category ID
+ * @returns vehicle object with generated slug
+ */
+const addVehicle = async (make, model, year, price, description, categoryId) => {
+  try {
+    const slug = generateSlug(make, model, year);
+    
+    const query = `
+      INSERT INTO vehicles (make, model, year, price, description, slug, category_id, availability)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, true)
+      RETURNING id, make, model, year, price, description, slug, category_id
+    `;
+    
+    const result = await db.query(query, [make, model, year, price, description, slug, categoryId]);
+    
+    if (result.rows.length === 0) {
+      return null;
+    }
+
+    const vehicle = result.rows[0];
+    return {
+      id: vehicle.id,
+      make: vehicle.make,
+      model: vehicle.model,
+      year: vehicle.year,
+      price: vehicle.price,
+      description: vehicle.description,
+      slug: vehicle.slug,
+      categoryId: vehicle.category_id
+    };
+  } catch (error) {
+    console.error("Error adding vehicle:", error);
+    throw error;
+  }
+};
+
+/**
+ * Delete a vehicle from the database by ID
+ * @param {number} vehicleId - The ID of the vehicle to delete
+ * @returns true if deletion was successful
+ */
+const deleteVehicle = async (vehicleId) => {
+  try {
+    const query = `DELETE FROM vehicles WHERE id = $1 RETURNING id`;
+    const result = await db.query(query, [vehicleId]);
+    
+    return result.rows.length > 0;
+  } catch (error) {
+    console.error("Error deleting vehicle:", error);
+    throw error;
+  }
+};
+
+export { getAllVehicles, getSortedVehicles, getVehicleBySlug, getCategories, addVehicle, deleteVehicle };

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { homePage } from "./index.js";
 import { vehicleCatalogPage, vehicleDetailsPage } from './catalog/catalog.js';
+import { vehicleManagementPage, showAddVehicleForm, processAddVehicle, processDeleteVehicle } from './admin/vehicles.js';
 import { showContactForm, processContactForm  } from './forms/contact.js';
 import { showReviewForm, processReview, showUpdateReviewForm, processDeleteReview } from './forms/review.js';
 import { showServiceRequestForm, processServiceRequest } from './forms/service-request.js';
@@ -10,7 +11,7 @@ import { showLoginForm, processLogin, processLogout, showDashboard } from './for
 import { contactResponsesPage } from './admin/contact-responses.js';
 import { reviewResponsesPage } from "./admin/review-responses.js";
 import { userManagementPage, showEditAccountForm, processEditAccount, processDeleteAccount } from './admin/users.js';
-import { registrationValidationRules, loginValidationRules, contactValidation, reviewValidation, serviceRequestValidation } from "../middleware/validation/forms.js";
+import { registrationValidationRules, loginValidationRules, contactValidation, reviewValidation, serviceRequestValidation, vehicleValidation } from "../middleware/validation/forms.js";
 import { requireLogin, requireRole } from "../middleware/auth.js";
 
 const router = Router();
@@ -49,6 +50,11 @@ router.post('/user/:id/delete', requireLogin, processDeleteAccount);
 router.get('/admin', requireLogin, requireRole('owner' || 'employee'), showDashboard);
 router.get('/admin/users', requireLogin, requireRole('owner'), userManagementPage);
 router.get('/admin/contact-responses', requireLogin, requireRole('owner' || 'employee'), contactResponsesPage);
+
+router.get('/admin/vehicles', requireLogin, requireRole('owner'), vehicleManagementPage);
+router.get('/admin/vehicles/add', requireLogin, requireRole('owner'), showAddVehicleForm);
+router.post('/admin/vehicles/add', requireLogin, requireRole('owner'), vehicleValidation, processAddVehicle);
+router.post('/admin/vehicles/:id/delete', requireLogin, requireRole('owner'), processDeleteVehicle);
 
 
 export default router;

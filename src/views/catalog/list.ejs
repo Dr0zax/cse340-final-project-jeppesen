@@ -39,11 +39,15 @@
     <% vehicles.forEach(vehicle => { %>
     <div class="vehicle-card">
       <div>
-        <h2>
-          <a href="/catalog/<%= vehicle.slug %>"
-            ><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></a
-          >
-        </h2>
+        <div class="vehicle-header">
+          <h2>
+            <a href="/catalog/<%= vehicle.slug %>"
+              ><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></a
+            >
+          </h2>
+          <span class="category-badge"><%= vehicle.category %></span>
+        </div>
+        
         <p><%= vehicle.description %></p>
       </div>
       <img
