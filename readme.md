@@ -40,6 +40,10 @@ Employees have elevated permissions to manage site content and user submissions:
 - **Update service request statuses**  
 - **View all contact form submissions**
 
+### Owner Only Features
+- **All Privileges as Employee and User**
+- **Manage Vehicle Catalog (create, delete)**
+
 ---
 
 ## Database Schema Requirements  
@@ -142,6 +146,12 @@ Role-based access control governs access to admin and employee routes.
 - **Database:** PostgreSQL  
 - **Authentication:** session-based auth   
 - **Frontend:** EJS
+
+---
+
+## Known Limitations
+- **Cart & Checkout System** I was not able to implement a system for adding vehicles to a cart and checking them out
+- **Vehicle Images** When adding a new vehicle to the catalog, you cannot add an image along with it
 
 ---
 
