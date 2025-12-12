@@ -148,7 +148,16 @@ const updateUser = async (id, name, email) => {
  */
 const deleteUser = async (id) => {
     try {
-        const query = 'DELETE FROM users WHERE id = $1';
+        const query = `
+        WITH deleted_reviews AS (
+            DELETE FROM reviews WHERE user_id = $1
+        ), deleted_service_requests AS (
+            DELETE FROM service_requests WHERE user_id = $1
+        )
+        DELETE FROM users WHERE id = $1
+        RETURNING id;
+        `;
+
         const result = await db.query(query, [id]);
         return result.rowCount > 0;
     } catch (error) {
