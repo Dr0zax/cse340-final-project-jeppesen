@@ -159,6 +159,9 @@ pnpm run dev
 
 Env Variables
 ```env
+DB_URL=
+ENABLE_SQL_LOGGING=false
 PORT=
-NODE_ENV=
+NODE_ENV=development
+SESSION_SECRET=
 ```
