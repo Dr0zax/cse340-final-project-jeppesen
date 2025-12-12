@@ -46,8 +46,18 @@ const processLogin = async (req, res) => {
     req.session.user = user;
 
     console.log('Logged In!');
-    
-    res.redirect('/dashboard');
+
+    // Ensure the session is persisted before redirecting. This helps
+    // when the session store is asynchronous (e.g., Postgres on Render).
+    req.session.save((err) => {
+        if (err) {
+            console.error('Session save error:', err);
+            // On error, still attempt to redirect so user isn't left hanging
+            return res.redirect('/dashboard');
+        }
+
+        res.redirect('/dashboard');
+    });
 };
 
 /**

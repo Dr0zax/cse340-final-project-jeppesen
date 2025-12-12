@@ -19,6 +19,12 @@ const NODE_ENV = process.env.NODE_ENV?.toLocaleLowerCase() || 'development';
 
 const pgSession = connectPgSimple(session);
 
+// When running behind a proxy (e.g., Render), enable trust proxy
+// so secure cookies and redirect behavior work as expected.
+if (!NODE_ENV.includes('dev')) {
+    app.set('trust proxy', 1);
+}
+
 app.use(session({
     store: new pgSession({
         conString: process.env.DB_URL,
