@@ -1,0 +1,29 @@
+<%- include('../../partials/header') %>
+    <h1><%= title %></h1>
+
+    <% if (responses && responses.length > 0) { %>
+        <div class="review-responses">
+            <% responses.forEach(response => { %>
+                <div class="response-item">
+                    <h3 class="response-vehicle"><a href="/catalog/<%= response.vehicle_slug %>"><%= response.vehicle_name %></a></h3>
+                    <p class="response-comment"><span class="response-user"><%= response.user_name %> - </span><%= response.comment %></p>
+                    <p class="response-rating"><%= response.rating %> / 5</p>
+                    <p class="response-date">Submitted: <%= new Date(response.created_at).toLocaleDateString() %></p>
+                    <% if (loggedIn) { %>
+                        <% if (currentUser.role_name == "owner" || currentUser.role_name == "employee" || currentUser.id === response.user_id) { %>
+                            <div class="actions-pannel">
+                                <a href="/review/edit/<%= response.id %>">Edit</a>
+                                <form method="POST" action="/review/delete/<%= response.id %>" style="display:inline;">
+                                    <button type="submit" onclick="return confirm('Are you sure you want to delete this review?');">Delete</button>
+                                </form>
+                            </div>
+                        <% } %>  
+                    <% } %>  
+                </div>
+
+            <% }); %>
+        </div>
+    <% } else { %>
+        <p class="no-responses">No contact form submissions yet.</p>
+    <% } %>
+<%- include('../../partials/footer') %>

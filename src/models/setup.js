@@ -102,7 +102,7 @@ const createReviewsTableIfNotExists = `
     CREATE TABLE IF NOT EXISTS reviews (
         id SERIAL PRIMARY KEY,
         user_id INTEGER NOT NULL REFERENCES users(id),
-        vehicle_id INTEGER NOT NULL REFERENCES vehicles(id),
+        vehicle_slug VARCHAR(250) NOT NULL,
         rating INTEGER CHECK (rating >= 1 AND rating <= 5),
         comment TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -114,7 +114,8 @@ const createServiceRequestsTableIfNotExists = `
     CREATE TABLE IF NOT EXISTS service_requests (
         id SERIAL PRIMARY KEY,
         user_id INTEGER NOT NULL REFERENCES users(id),
-        vehicle_id INTEGER NOT NULL REFERENCES vehicles(id),
+        vehicle_description TEXT,
+        vehicle_plate VARCHAR(10) NOT NULL,
         service_type VARCHAR(200) NOT NULL,
         status VARCHAR(100) NOT NULL DEFAULT 'pending',
         notes TEXT,

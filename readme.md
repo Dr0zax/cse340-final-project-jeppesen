@@ -96,7 +96,8 @@ Your database must include the following tables:
 ### **Service Requests**  
 - `id`  
 - `user_id` (FK → Users)  
-- `vehicle_id` (optional FK → Vehicles owned by user)  
+- `vehicle_description`
+- `vehicle_plate`
 - `service_type`  
 - `status` (`Submitted`, `Pending`, `Completed`)  
 - `notes`  
@@ -123,47 +124,30 @@ Role-based access control governs access to admin and employee routes.
 
 ## API Structure
 
-- `GET /regitser`
-- `POST /register`
-- `GET /login`
-- `POST /login`
-- `POST /logout`
+- Public routes:
+  - `GET /` — Home page
+  - `GET /catalog` — Vehicle catalog listing
+  - `GET /catalog/:vehicleSlug` — Vehicle detail page
+  - `GET /contact` — Contact form
+  - `POST /contact` — Submit contact form (validated)
 
-- `/dashboard`
-- `POST /edit (owner of account)`
-- `POST /change-password (owner of account)`
-- `GET /admin (owner/employee)`
-- `GET /admin/service-requests (owner/employee)`
-- `GET /admin/reviews (owner/employee)`
+- Authentication:
+  - `GET /register` — Registration form
+  - `POST /register` — Process registration (validated)
+  - `GET /login` — Login form
+  - `POST /login` — Process login (validated)
+  - `GET /logout` — Logout
 
-- `/vehicles`
-- `GET /`
-- `GET /:id`
-- `POST / (owner)`
-- `PUT /:id (employee/owner)`
-- `DELETE /:id (owner)`
+- User dashboard & account (require login):
+  - `GET /dashboard` — User dashboard
+  - `GET /user/:id/edit` — Edit account form
+  - `POST /user/:id/edit` — Update account
+  - `POST /user/:id/delete` — Delete account
 
-- `/categories`
-- `GET /`
-- `POST / (owner)`
-- `PUT /:id (owner)`
-- `DELETE /:id (owner)`
-
-- `/reviews`
-- `POST / (user)`
-- `PUT /:id (owner of review)`
-- `DELETE /:id (owner of review or employee)`
-
-- `/service-requests`
-- `POST / (user)`
-- `GET /mine (user)`
-- `GET / (employee/owner)`
-- `PUT /:id/status (employee/owner)`
-
-- `/contact`
-- `POST /`
-- `GET / (employee/owner)`
-
+- Admin (require owner/employee):
+  - `GET /admin` — Admin dashboard (owner/employee)
+  - `GET /admin/contact-responses` — View contact submissions (owner/employee)
+  - `GET /admin/users` — User management (owner)
 
 ---
 

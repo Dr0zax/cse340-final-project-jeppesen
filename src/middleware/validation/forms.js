@@ -77,4 +77,14 @@ const contactValidation = [
         .normalizeEmail()
 ];
 
-export { registrationValidationRules, loginValidationRules, contactValidation };
+/**
+ * Validation rules for review form submission
+ */
+const reviewValidation = [];
+
+/**
+ * Validation rules for service request form submission
+ */
+const serviceRequestValidation = [];
+
+export { registrationValidationRules, loginValidationRules, contactValidation, reviewValidation, serviceRequestValidation };

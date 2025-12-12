@@ -134,6 +134,7 @@ const getVehicleBySlug = async (vehicleSlug) => {
       description: vehicle.description,
       category: vehicle.category_name,
       slug: vehicle.slug,
+      name: `${vehicle.make} ${vehicle.model} ${vehicle.year}`
     };
   } catch {}
 };

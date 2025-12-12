@@ -1,0 +1,20 @@
+<%- include('../partials/header') %>
+    <h1><%= title %></h1>
+
+    <% if (requests && requests.length > 0) { %>
+        <div class="requests">
+            <% requests.forEach(request => { %>
+                <div class="request-item">
+                    <h3 class="request-header"><span><%= request.user_name %> - </span><%= request.vehicle_description %></h3>
+                    <p class="request-vehicle_plate">Plate: <%= request.vehicle_plate %></p>
+                    <p class="request-service_type">Type: <%= request.service_type %></p>
+                    <p class="request-notes"><%= request.notes %></p>
+                    <p class="request-status"><%= request.status %></p>
+                    <p class="request-date">Submitted: <%= new Date(request.created_at).toLocaleDateString() %></p>
+                </div>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <p class="no-requests">No service requests yet.</p>
+    <% } %>
+<%- include('../partials/footer') %>
