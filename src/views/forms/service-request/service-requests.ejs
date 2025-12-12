@@ -11,6 +11,7 @@
                     <p class="request-notes"><%= request.notes %></p>
                     <p class="request-date">Submitted: <%= new Date(request.created_at).toLocaleDateString() %></p>
                     <% if (loggedIn) { %>
+                        <div class="actions-panel">
                         <% if (currentUser.role_name == "owner" || currentUser.role_name == "employee") { %>
                             <form method="POST" action="/service-requests/update-status" class="status-update-form">
                                 <input type="hidden" name="requestId" value="<%= request.id %>">
@@ -23,7 +24,13 @@
                                 </select>
                                 <button type="submit" class="btn-update-status">Update Status</button>
                             </form>
-                            <% } %>  
+                            <% } %>
+                        <% if (currentUser.role_name == "owner" || currentUser.role_name == "employee" || currentUser.id === request.user_id) { %>
+                            <form method="POST" action="/service-requests/<%= request.id %>/delete" class="delete-request-form" onsubmit="return confirm('Are you sure you want to delete this service request?');">
+                                <button type="submit" class="btn-delete-request">Delete Request</button>
+                            </form>
+                        <% } %>
+                        </div>
                     <% } %>  
                 </div>
             <% }); %>

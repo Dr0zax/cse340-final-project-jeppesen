@@ -1,4 +1,4 @@
-import { getAllServiceRequests, getServiceRequestsByUserId, updateServiceRequestStatus } from "../../models/forms/service-request.js";
+import { getAllServiceRequests, getServiceRequestsByUserId, getServiceRequestById, updateServiceRequestStatus, deleteServiceRequest } from "../../models/forms/service-request.js";
 
 const showServiceRequestsPage = async (req, res) =>{
     const currentUser = req.session.user
@@ -29,8 +29,29 @@ const processUpdateServiceRequestStatus = async (req, res) => {
     res.redirect('/service-requests');
 }
 
+const processDeleteServiceRequest = async (req, res) => {
+    const requestId = req.params.id;
+    const currentUser = req.session.user;
+
+    if (!requestId) {
+        return res.redirect('/service-requests');
+    }
+
+    const serviceRequest = await getServiceRequestById(requestId);
+    if (!serviceRequest) {
+        return res.redirect('/service-requests');
+    }
+
+    // Allow owner/employee or the user who submitted the request
+    if (currentUser.role_name === 'owner' || currentUser.role_name === 'employee' || currentUser.id === serviceRequest.user_id) {
+        await deleteServiceRequest(requestId);
+    }
+
+    return res.redirect('/service-requests');
+}
+
 const addServiceRequestsSpecificStyles = (res) => {
     res.addStyle('<link rel="stylesheet" href="/css/pages/service-request.css">');
 }
 
-export { showServiceRequestsPage, processUpdateServiceRequestStatus };
+export { showServiceRequestsPage, processUpdateServiceRequestStatus, processDeleteServiceRequest };

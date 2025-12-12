@@ -44,6 +44,7 @@ const getAllServiceRequests = async () => {
 
             return {
                 id: serviceRequest.id,
+                user_id: serviceRequest.user_id,
                 user_name: user ? user.name : null,
                 vehicle_description: serviceRequest.vehicle_description,
                 vehicle_plate: serviceRequest.vehicle_plate,
@@ -58,6 +59,48 @@ const getAllServiceRequests = async () => {
     } catch (error) {
         console.error('DB Error in getAllServiceRequests:', error);
         return [];
+    }
+};
+
+/**
+ * Retrieve a single service request by id
+ * @param {number} request_id
+ * @returns {Promise<Object|null>} Service request or null
+ */
+const getServiceRequestById = async (request_id) => {
+    const query = `
+        SELECT id, user_id, vehicle_description, vehicle_plate, service_type, status, notes, created_at
+        FROM service_requests
+        WHERE id = $1
+    `;
+
+    try {
+        const result = await db.query(query, [request_id]);
+        return result.rows[0] || null;
+    } catch (error) {
+        console.error('DB Error in getServiceRequestById:', error);
+        return null;
+    }
+};
+
+/**
+ * Delete a service request by id
+ * @param {number} request_id
+ * @returns {Promise<Object|null>} The deleted row or null
+ */
+const deleteServiceRequest = async (request_id) => {
+    const query = `
+        DELETE FROM service_requests
+        WHERE id = $1
+        RETURNING id, user_id, vehicle_description, vehicle_plate, service_type, notes, status, created_at
+    `;
+
+    try {
+        const result = await db.query(query, [request_id]);
+        return result.rows[0] || null;
+    } catch (error) {
+        console.error('DB Error in deleteServiceRequest:', error);
+        return null;
     }
 };
 
@@ -122,4 +165,4 @@ const updateServiceRequestStatus = async (request_id, status) => {
     }
 };
 
-export { saveServiceRequestForm, getAllServiceRequests, getServiceRequestsByUserId, updateServiceRequestStatus };
+export { saveServiceRequestForm, getAllServiceRequests, getServiceRequestsByUserId, getServiceRequestById, updateServiceRequestStatus, deleteServiceRequest };

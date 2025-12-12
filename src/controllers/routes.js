@@ -4,7 +4,7 @@ import { vehicleCatalogPage, vehicleDetailsPage } from './catalog/catalog.js';
 import { showContactForm, processContactForm  } from './forms/contact.js';
 import { showReviewForm, processReview, showUpdateReviewForm, processDeleteReview } from './forms/review.js';
 import { showServiceRequestForm, processServiceRequest } from './forms/service-request.js';
-import { showServiceRequestsPage, processUpdateServiceRequestStatus } from "./admin/service-requests.js";
+import { showServiceRequestsPage, processUpdateServiceRequestStatus, processDeleteServiceRequest } from "./admin/service-requests.js";
 import { showRegistrationForm, processRegistration } from './forms/registration.js';
 import { showLoginForm, processLogin, processLogout, showDashboard } from './forms/login.js';
 import { contactResponsesPage } from './admin/contact-responses.js';
@@ -32,6 +32,7 @@ router.get('/service-request', requireLogin, showServiceRequestForm);
 router.post('/service-request', requireLogin, serviceRequestValidation, processServiceRequest);
 router.get('/service-requests', requireLogin, showServiceRequestsPage);
 router.post('/service-requests/update-status', requireLogin, requireRole('owner' || 'employee'), processUpdateServiceRequestStatus);
+router.post('/service-requests/:id/delete', requireLogin, processDeleteServiceRequest);
 
 router.get('/register', showRegistrationForm);
 router.post('/register', registrationValidationRules, processRegistration);
