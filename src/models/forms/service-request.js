@@ -18,7 +18,7 @@ const saveServiceRequestForm = async (user_id, vehicle_description, vehicle_plat
     `;
 
     try {
-        const result = await db.query(query, [user_id, vehicle_description, vehicle_plate, serviceType, "submitted", notes]);
+        const result = await db.query(query, [user_id, vehicle_description, vehicle_plate, serviceType, "In Progress", notes]);
         return result.rows[0] || null;
     } catch (error) {
         console.error('DB Error in saveReviewForm:', error);
