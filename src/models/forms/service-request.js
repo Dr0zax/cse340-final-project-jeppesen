@@ -61,4 +61,65 @@ const getAllServiceRequests = async () => {
     }
 };
 
-export { saveServiceRequestForm, getAllServiceRequests };
+/**
+ * Retrieve service requests for a specific user
+ * @param {number} user_id
+ * @returns {Promise<Array>} Array of service requests for the user
+ */
+const getServiceRequestsByUserId = async (user_id) => {
+    const query = `
+        SELECT service_requests.id, service_requests.user_id, service_requests.vehicle_description, service_requests.vehicle_plate, service_requests.service_type, service_requests.status, service_requests.notes, service_requests.created_at
+        FROM service_requests
+        WHERE user_id = $1
+        ORDER BY created_at DESC
+    `;
+    try {
+        const result = await db.query(query, [user_id]);
+
+        const serviceRequests = await Promise.all(result.rows.map(async (serviceRequest) => {
+            const user = await getUserById(serviceRequest.user_id);
+
+            return {
+                id: serviceRequest.id,
+                user_id: serviceRequest.user_id,
+                user_name: user ? user.name : null,
+                vehicle_description: serviceRequest.vehicle_description,
+                vehicle_plate: serviceRequest.vehicle_plate,
+                service_type: serviceRequest.service_type,
+                notes: serviceRequest.notes,
+                status: serviceRequest.status,
+                created_at: serviceRequest.created_at
+            };
+        }));
+
+        return serviceRequests;
+    } catch (error) {
+        console.error('DB Error in getServiceRequestsByUserId:', error);
+        return [];
+    }
+};
+
+/**
+ * Update the status of a service request
+ * @param {number} request_id
+ * @param {string} status
+ * @returns {Promise<Object|null>} The updated service request or null
+ */
+const updateServiceRequestStatus = async (request_id, status) => {
+    const query = `
+        UPDATE service_requests
+        SET status = $1
+        WHERE id = $2
+        RETURNING id, user_id, vehicle_description, vehicle_plate, service_type, notes, status, created_at
+    `;
+
+    try {
+        const result = await db.query(query, [status, request_id]);
+        return result.rows[0] || null;
+    } catch (error) {
+        console.error('DB Error in updateServiceRequestStatus:', error);
+        return null;
+    }
+};
+
+export { saveServiceRequestForm, getAllServiceRequests, getServiceRequestsByUserId, updateServiceRequestStatus };

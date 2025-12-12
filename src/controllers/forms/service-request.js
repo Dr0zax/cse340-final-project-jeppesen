@@ -14,8 +14,6 @@ const processServiceRequest = async (req, res) => {
     if (!errors.isEmpty()) {
         return res.redirect('/service-request');
     }
-
-    console.log(req.body);
     
 
     const { vehicle, vehiclePlate, serviceType, notes } = req.body;
