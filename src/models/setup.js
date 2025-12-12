@@ -376,13 +376,13 @@ const seedRolesAndUsers = async (verbose = true) => {
 
         if (ownerCount === 0) {
             // No owner exists, create one
-            const hashedPassword = await hashPassword('Owner1234!');
+            const hashedPassword = await hashPassword('P@$$w0rd!');
             await db.query(`
                 INSERT INTO users (name, email, password, role_id) 
                 VALUES ($1, $2, $3, $4)
             `, ['Owner User', 'owner@example.com', hashedPassword, ownerRoleId]);
             if (verbose) {
-                console.log('Owner user created: owner@example.com / Owner1234!');
+                console.log('Owner user created: owner@example.com / P@$$w0rd!');
             }
         }
         
@@ -395,13 +395,13 @@ const seedRolesAndUsers = async (verbose = true) => {
 
         if (employeeCount === 0) {
             // No employee exists, create one
-            const hashedPassword = await hashPassword('Test1234!');
+            const hashedPassword = await hashPassword('P@$$w0rd!');
             await db.query(`
                 INSERT INTO users (name, email, password, role_id) 
                 VALUES ($1, $2, $3, $4)
             `, ['Employee User', 'employee@example.com', hashedPassword, employeeRoleId]);
             if (verbose) {
-                console.log('Admin user created: employee@example.com / Test1234!');
+                console.log('Admin user created: employee@example.com / P@$$w0rd!');
             }
         }
 
@@ -414,7 +414,7 @@ const seedRolesAndUsers = async (verbose = true) => {
 
         if (userCount < 2) {
             // Create test users if fewer than 2 exist
-            const hashedPassword = await hashPassword('Test1234!');
+            const hashedPassword = await hashPassword('P@$$w0rd!');
             const usersToCreate = 2 - userCount;
 
             for (let i = 0; i < usersToCreate; i++) {
@@ -428,7 +428,7 @@ const seedRolesAndUsers = async (verbose = true) => {
             }
 
             if (verbose) {
-                console.log(`Created ${usersToCreate} test user(s) with password: Test1234!`);
+                console.log(`Created ${usersToCreate} test user(s) with password: P@$$w0rd!`);
             }
         }
 

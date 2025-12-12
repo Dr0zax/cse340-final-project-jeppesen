@@ -51,8 +51,9 @@ const processDeleteReview = async (req, res) => {
     }
 };
 
+
 const addReviewSpecificStyles = (res) => {
     res.addStyle('<link rel="stylesheet" href="/css/pages/review.css">')
 }
 
-export {showReviewForm, processReview, showUpdateReviewForm, processDeleteReview};
+export {showReviewForm, processReview, processDeleteReview};
