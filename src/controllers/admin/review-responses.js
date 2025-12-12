@@ -9,7 +9,7 @@ const reviewResponsesPage = async (req, res) =>{
 }
 
 const addResponsesSpecificStyles = (res) => {
-    res.addStyle('<link rel="stylesheet" href="/css/pages/review-responses.css">');
+    res.addStyle('<link rel="stylesheet" href="/css/pages/review.css">');
 }
 
 export { reviewResponsesPage };

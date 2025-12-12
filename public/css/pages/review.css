@@ -72,3 +72,84 @@
         }
     }
 }
+
+.review-responses {
+    max-width: 800px;
+    margin: 2rem auto;
+
+    h2 {
+        border-bottom: 2px solid var(--secondary-color);
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .response-item {
+        border-top: 5px solid var(--primary-color);
+        box-shadow: inset 0 5px 0 var(--primary-color);
+        border-top: none;
+        background-color: var(--background-color);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: box-shadow 0.2s ease;
+
+        .response-vehicle {
+            margin: 0 0 1rem 0;
+            font-size: 1.2rem;
+            font-weight: 500;
+
+            a {
+                text-decoration: none;
+                color: #333;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        .response-comment {
+            color: #444;
+            line-height: 1.6;
+            margin: 0 0 1rem 0;
+        }
+
+        .response-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .actions-panel {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+
+                a, button {
+                    border: none;
+                    text-decoration: none;
+                    background-color: var(--primary-color);
+                    padding: 10px 15px;
+                    color: var(--background-color);
+                    font-size: 16px;
+                    
+                    transition: box-shadow 0.3s ease;
+
+                    &:hover {
+                        box-shadow: 0 0 5px var(--primary-color);
+                    }
+                }
+            }
+    }
+
+    .no-responses {
+        text-align: center;
+        color: #666;
+        font-style: italic;
+        padding: 2rem;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+}
